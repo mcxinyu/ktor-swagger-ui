@@ -106,6 +106,10 @@ tasks.withType<Detekt>().configureEach {
     }
 }
 
+java {
+    withSourcesJar()
+}
+
 afterEvaluate {
     publishing {
         publications {
