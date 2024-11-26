@@ -14,6 +14,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt")
     id("com.vanniktech.maven.publish")
     id("org.jetbrains.dokka")
+    `maven-publish`
 }
 
 repositories {
@@ -84,43 +85,66 @@ tasks.withType<Detekt>().configureEach {
     }
 }
 
-mavenPublishing {
-    val projectGroupId: String by project
-    val projectVersion: String by project
-    val projectArtifactIdBase: String by project
-    val projectNameBase: String by project
-    val projectDescriptionBase: String by project
-    val projectScmUrl: String by project
-    val projectScmConnection: String by project
-    val projectLicenseName: String by project
-    val projectLicenseUrl: String by project
-    val projectDeveloperName: String by project
-    val projectDeveloperUrl: String by project
+// mavenPublishing {
+//     val projectGroupId: String by project
+//     val projectVersion: String by project
+//     val projectArtifactIdBase: String by project
+//     val projectNameBase: String by project
+//     val projectDescriptionBase: String by project
+//     val projectScmUrl: String by project
+//     val projectScmConnection: String by project
+//     val projectLicenseName: String by project
+//     val projectLicenseUrl: String by project
+//     val projectDeveloperName: String by project
+//     val projectDeveloperUrl: String by project
+//
+//     configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
+//     publishToMavenCentral(SonatypeHost.S01)
+//     signAllPublications()
+//     coordinates(projectGroupId, projectArtifactIdBase, projectVersion)
+//     pom {
+//         name.set(projectNameBase)
+//         description.set(projectDescriptionBase)
+//         url.set(projectScmUrl)
+//         licenses {
+//             license {
+//                 name.set(projectLicenseName)
+//                 url.set(projectLicenseUrl)
+//                 distribution.set(projectLicenseUrl)
+//             }
+//         }
+//         scm {
+//             url.set(projectScmUrl)
+//             connection.set(projectScmConnection)
+//         }
+//         developers {
+//             developer {
+//                 id.set(projectDeveloperName)
+//                 name.set(projectDeveloperName)
+//                 url.set(projectDeveloperUrl)
+//             }
+//         }
+//     }
+// }
 
-    configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
-    publishToMavenCentral(SonatypeHost.S01)
-    signAllPublications()
-    coordinates(projectGroupId, projectArtifactIdBase, projectVersion)
-    pom {
-        name.set(projectNameBase)
-        description.set(projectDescriptionBase)
-        url.set(projectScmUrl)
-        licenses {
-            license {
-                name.set(projectLicenseName)
-                url.set(projectLicenseUrl)
-                distribution.set(projectLicenseUrl)
+java {
+    withSourcesJar()
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("XXX") {
+                afterEvaluate { from(components["java"]) }
+                // artifact(sourcesJar)
+                // artifact(dokkaJavadocJar)
+                //artifact(dokkaHtmlJar)
             }
         }
-        scm {
-            url.set(projectScmUrl)
-            connection.set(projectScmConnection)
-        }
-        developers {
-            developer {
-                id.set(projectDeveloperName)
-                name.set(projectDeveloperName)
-                url.set(projectDeveloperUrl)
+        repositories {
+            maven {
+                name = "XXX"
+                url = uri("${project.buildDir}/repo")
             }
         }
     }

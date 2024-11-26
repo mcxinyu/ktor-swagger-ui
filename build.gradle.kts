@@ -9,26 +9,3 @@ plugins {
 repositories {
     mavenCentral()
 }
-
-java {
-    withSourcesJar()
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("XXX") {
-                afterEvaluate { from(components["java"]) }
-                // artifact(sourcesJar)
-                // artifact(dokkaJavadocJar)
-                //artifact(dokkaHtmlJar)
-            }
-        }
-        repositories {
-            maven {
-                name = "XXX"
-                url = uri("${project.buildDir}/repo")
-            }
-        }
-    }
-}
