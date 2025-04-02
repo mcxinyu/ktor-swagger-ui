@@ -70,40 +70,63 @@ tasks.withType<DokkaTask>().configureEach {
     outputDirectory.set(file("$rootDir/docs/dokka/ktor-redoc"))
 }
 
-mavenPublishing {
-    val projectGroupId: String by project
-    val projectVersion: String by project
-    val projectBaseScmUrl: String by project
-    val projectBaseScmConnection: String by project
-    val projectLicenseName: String by project
-    val projectLicenseUrl: String by project
-    val projectDeveloperName: String by project
-    val projectDeveloperUrl: String by project
+// mavenPublishing {
+//     val projectGroupId: String by project
+//     val projectVersion: String by project
+//     val projectBaseScmUrl: String by project
+//     val projectBaseScmConnection: String by project
+//     val projectLicenseName: String by project
+//     val projectLicenseUrl: String by project
+//     val projectDeveloperName: String by project
+//     val projectDeveloperUrl: String by project
+//
+//     configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
+//     publishToMavenCentral(SonatypeHost.S01)
+//     signAllPublications()
+//     coordinates(projectGroupId, "ktor-redoc", projectVersion)
+//     pom {
+//         name.set("Ktor Redoc")
+//         description.set("Ktor plugin to provide Redoc")
+//         url.set(projectBaseScmUrl +"ktor-redoc")
+//         licenses {
+//             license {
+//                 name.set(projectLicenseName)
+//                 url.set(projectLicenseUrl)
+//                 distribution.set(projectLicenseUrl)
+//             }
+//         }
+//         scm {
+//             url.set(projectBaseScmUrl + "ktor-redoc")
+//             connection.set(projectBaseScmConnection + "ktor-redoc.git")
+//         }
+//         developers {
+//             developer {
+//                 id.set(projectDeveloperName)
+//                 name.set(projectDeveloperName)
+//                 url.set(projectDeveloperUrl)
+//             }
+//         }
+//     }
+// }
 
-    configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
-    publishToMavenCentral(SonatypeHost.S01)
-    signAllPublications()
-    coordinates(projectGroupId, "ktor-redoc", projectVersion)
-    pom {
-        name.set("Ktor Redoc")
-        description.set("Ktor plugin to provide Redoc")
-        url.set(projectBaseScmUrl +"ktor-redoc")
-        licenses {
-            license {
-                name.set(projectLicenseName)
-                url.set(projectLicenseUrl)
-                distribution.set(projectLicenseUrl)
+java {
+    withSourcesJar()
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("XXX") {
+                afterEvaluate { from(components["java"]) }
+                // artifact(sourcesJar)
+                // artifact(dokkaJavadocJar)
+                //artifact(dokkaHtmlJar)
             }
         }
-        scm {
-            url.set(projectBaseScmUrl + "ktor-redoc")
-            connection.set(projectBaseScmConnection + "ktor-redoc.git")
-        }
-        developers {
-            developer {
-                id.set(projectDeveloperName)
-                name.set(projectDeveloperName)
-                url.set(projectDeveloperUrl)
+        repositories {
+            maven {
+                name = "XXX"
+                url = uri("${project.buildDir}/repo")
             }
         }
     }
