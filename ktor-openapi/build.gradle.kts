@@ -129,10 +129,6 @@ tasks.withType<DokkaTask>().configureEach {
 //     }
 // }
 
-java {
-    withSourcesJar()
-}
-
 afterEvaluate {
     publishing {
         publications {
