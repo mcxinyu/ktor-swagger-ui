@@ -82,7 +82,7 @@ tasks.withType<DokkaTask>().configureEach {
 //     val projectDeveloperUrl: String by project
 //
 //     configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
-//     publishToMavenCentral(SonatypeHost.S01)
+//     publishToMavenCentral(automaticRelease = true)
 //     signAllPublications()
 //     coordinates(projectGroupId, "ktor-swagger-ui", projectVersion)
 //     pom {

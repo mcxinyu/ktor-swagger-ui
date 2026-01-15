@@ -108,6 +108,30 @@ tasks.withType<DokkaTask>().configureEach {
 //         }
 //     }
 // }
+//
+//     configure(KotlinJvm(JavadocJar.Dokka("dokkaHtml"), true))
+//     publishToMavenCentral(SonatypeHost.S01)
+//     signAllPublications()
+//     coordinates(projectGroupId, "ktor-redoc", projectVersion)
+//     pom {
+//         name.set("Ktor Redoc")
+//         description.set("Ktor plugin to provide Redoc")
+//         url.set(projectBaseScmUrl +"ktor-redoc")
+//         licenses {
+//             license {
+//                 name.set(projectLicenseName)
+//                 url.set(projectLicenseUrl)
+//                 distribution.set(projectLicenseUrl)
+//             }
+//         }
+//         repositories {
+//             maven {
+//                 name = "XXX"
+//                 url = uri("${project.buildDir}/repo")
+//             }
+//         }
+//     }
+// }
 
 afterEvaluate {
     publishing {
